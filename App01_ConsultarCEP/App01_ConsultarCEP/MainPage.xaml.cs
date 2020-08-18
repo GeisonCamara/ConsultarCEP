@@ -20,22 +20,19 @@ namespace App01_ConsultarCEP
         }
         private void BuscarCep(object sender, EventArgs args)
         {
-            string cep = txtCep.Text.Trim();
-            
+            string cep = txtCep.Text != null ? txtCep.Text.Trim() : string.Empty;
+
             if (IsValidCep(cep))
             {
                 try
                 {
                     Endereco endereco = ViaCEPServico.BuscarEnderecoViaCEP(cep);
-                    var resultado = "Resultado:\n";
 
+                    var resultado = "Resultado:\n";
                     if (endereco != null)
                     {
                         if (!string.IsNullOrEmpty(endereco.Cep))
                             resultado += string.Format("CEP: {0}\n", endereco.Cep);
-                        
-                        if (!string.IsNullOrEmpty(endereco.Logradouro))
-                            resultado += string.Format("Logradouro: {0}\n", endereco.Logradouro);
                         
                         if (!string.IsNullOrEmpty(endereco.Logradouro))
                             resultado += string.Format("Logradouro: {0}\n", endereco.Logradouro);
@@ -50,7 +47,7 @@ namespace App01_ConsultarCEP
                             resultado += string.Format("Localidade: {0}\n", endereco.Localidade);
                         
                         if (!string.IsNullOrEmpty(endereco.Uf))
-                            resultado += string.Format("Uf: {0}\n", endereco.Uf);
+                            resultado += string.Format("UF: {0}\n", endereco.Uf);
                         
                         if (!string.IsNullOrEmpty(endereco.Unidade))
                             resultado += string.Format("Unidade: {0}\n", endereco.Unidade);
@@ -62,22 +59,35 @@ namespace App01_ConsultarCEP
                     }
                     else
                     {
-                        DisplayAlert("Consultar CEP", string.Format("Não encontramos nenhuma resposta para o CEP informado: {0}", cep), "OK");
+                        ClearResult();
+                        DisplayAlert("Consultar CEP", string.Format("Não encontramos nenhum resultado para o CEP informado: {0}", cep), "OK");
                     }
                 }
                 catch (Exception e)
                 {
+                    ClearResult();
                     DisplayAlert("Erro ao Consultar", e.Message, "OK");
                 }
             }
             else
             {
-                lblResult.Text = string.Empty;
+                ClearResult();
             }
+        }
+
+        private void ClearResult()
+        {
+            lblResult.Text = string.Empty;
         }
 
         private bool IsValidCep(string cep)
         {
+            if (cep.Length == 0)
+            {
+                DisplayAlert("Atenção!", "Informe um CEP para efetuar a pesquisa.", "OK");
+                return false;
+            }
+
             int _cep = 0;
             if (!int.TryParse(cep, out _cep))
             {
