@@ -24,8 +24,51 @@ namespace App01_ConsultarCEP
             
             if (IsValidCep(cep))
             {
-                Endereco endereco = ViaCEPServico.BuscarEnderecoViaCEP(cep);
-                lblResult.Text = string.Format("Endereço: {0}, {1} {2}", endereco.Localidade, endereco.Uf, endereco.Logradouro);
+                try
+                {
+                    Endereco endereco = ViaCEPServico.BuscarEnderecoViaCEP(cep);
+                    var resultado = "Resultado:\n";
+
+                    if (endereco != null)
+                    {
+                        if (!string.IsNullOrEmpty(endereco.Cep))
+                            resultado += string.Format("CEP: {0}\n", endereco.Cep);
+                        
+                        if (!string.IsNullOrEmpty(endereco.Logradouro))
+                            resultado += string.Format("Logradouro: {0}\n", endereco.Logradouro);
+                        
+                        if (!string.IsNullOrEmpty(endereco.Logradouro))
+                            resultado += string.Format("Logradouro: {0}\n", endereco.Logradouro);
+
+                        if (!string.IsNullOrEmpty(endereco.Complemento))
+                            resultado += string.Format("Complemento: {0}\n", endereco.Complemento);
+
+                        if (!string.IsNullOrEmpty(endereco.Bairro))
+                            resultado += string.Format("Bairro: {0}\n", endereco.Bairro);                        
+
+                        if (!string.IsNullOrEmpty(endereco.Localidade))
+                            resultado += string.Format("Localidade: {0}\n", endereco.Localidade);
+                        
+                        if (!string.IsNullOrEmpty(endereco.Uf))
+                            resultado += string.Format("Uf: {0}\n", endereco.Uf);
+                        
+                        if (!string.IsNullOrEmpty(endereco.Unidade))
+                            resultado += string.Format("Unidade: {0}\n", endereco.Unidade);
+                        
+                        if (!string.IsNullOrEmpty(endereco.Ibge))
+                            resultado += string.Format("Código Ibge: {0}\n", endereco.Ibge);
+
+                        lblResult.Text = resultado;
+                    }
+                    else
+                    {
+                        DisplayAlert("Consultar CEP", string.Format("Não encontramos nenhuma resposta para o CEP informado: {0}", cep), "OK");
+                    }
+                }
+                catch (Exception e)
+                {
+                    DisplayAlert("Erro ao Consultar", e.Message, "OK");
+                }
             }
             else
             {
