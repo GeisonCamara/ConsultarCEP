@@ -36,6 +36,8 @@
     <BundleAssemblies>false</BundleAssemblies>
     <MandroidI18n />
     <AndroidSupportedAbis />
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -95,7 +97,7 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\App01_ConsultarCEP\ConsultarCEP.csproj">
+    <ProjectReference Include="..\ConsultarCEP\ConsultarCEP.csproj">
       <Project>{AA78FBEA-E4B3-4C98-86BF-0A88B44C4C3C}</Project>
       <Name>ConsultarCEP</Name>
     </ProjectReference>

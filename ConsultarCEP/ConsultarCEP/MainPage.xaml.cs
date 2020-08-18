@@ -29,7 +29,7 @@ namespace ConsultarCEP
                     Endereco endereco = ViaCEPServico.BuscarEnderecoViaCEP(cep);
 
                     var resultado = "Resultado:\n";
-                    if (endereco != null)
+                    if (endereco != null && endereco.Cep != null)
                     {
                         if (!string.IsNullOrEmpty(endereco.Cep))
                             resultado += string.Format("CEP: {0}\n", endereco.Cep);

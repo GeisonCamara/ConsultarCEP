@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using ConsultarCEP.Droid;
+using App01_ConsultarCEP.Droid;
 
 namespace ConsultarCEP.Droid
 {
